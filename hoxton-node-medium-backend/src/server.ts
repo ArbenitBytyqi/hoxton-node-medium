@@ -27,6 +27,20 @@ app.get('/posts/:id', async (req, res) => {
     }
 })
 
+// title    String     @unique
+//   content  String
+//   image    String
+//   likes    Int
+
+app.post('/posts', async(req, res) => {
+    const post = await prisma.posts.create({ data: req.body,
+    include: { Comments: true }
+    })
+
+    res.send(post)
+
+})
+
 // GENERAL
 
 app.listen(port, () => {
