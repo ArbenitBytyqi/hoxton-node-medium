@@ -27,18 +27,25 @@ app.get('/posts/:id', async (req, res) => {
     }
 })
 
-// title    String     @unique
-//   content  String
-//   image    String
-//   likes    Int
-
 app.post('/posts', async(req, res) => {
     const post = await prisma.posts.create({ data: req.body,
     include: { Comments: true }
     })
-
     res.send(post)
+})
 
+// COMMENTS
+
+app.get('/comments' , async (req, res) => {
+    const comments = await prisma.comments.findMany({ include: { post: true } })
+    res.send(comments)
+})
+
+app.post('/comments', async(req, res) => {
+    const post = await prisma.comments.create({ data: req.body,
+    include: { post: true }
+    })
+    res.send(post)
 })
 
 // GENERAL
