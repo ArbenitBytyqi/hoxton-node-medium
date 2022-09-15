@@ -15,13 +15,19 @@ model Posts {
   title    String     @unique
   content  String
   image    String
-  likes    Int
   comments Comments[]
+  likes    Likes[]
+}
+
+model Likes {
+  id      Int   @id @default(autoincrement())
+  post    Posts @relation(fields: [postsId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  postsId Int
 }
 
 model Comments {
   id      Int    @id @default(autoincrement())
   content String
-  post    Posts  @relation(fields: [postsId], references: [id])
+  post    Posts  @relation(fields: [postsId], references: [id], onDelete: Cascade, onUpdate: Cascade)
   postsId Int
 }
