@@ -1,51 +1,16 @@
-import { useEffect, useState } from "react";
+import { Navigate, Route, Routes } from "react-router-dom";
 import "./App.css";
-
-type Posts = {
-  id: number;
-  title: string;
-  content: string;
-  image: string;
-  likes: number;
-  comments: [];
-};
-
-type Comments = {
-  id: number;
-  comtent: string;
-  postId: number;
-};
+import { Home } from "./pages/Home";
+import { PostsDetails } from "./pages/PostsDetails";
 
 function App() {
-  const [posts, setPosts] = useState<Posts[]>([]);
-  const [comments, setComments] = useState<Comments[]>([]);
-
-  useEffect(() => {
-    fetch("http://localhost:5000/posts")
-      .then((resp) => resp.json())
-      .then((postsFromServer) => setPosts(postsFromServer));
-  }, []);
-
-  useEffect(() => {
-    fetch("http://localhost:5000/comments")
-      .then((resp) => resp.json())
-      .then((commentsFromServer) => setComments(commentsFromServer));
-  }, []);
-
   return (
     <div className="App">
-      <main className="posts">
-        {posts.map((post) => (
-          <div>
-            <div>{post.title}</div>
-            <div>{post.content}</div>
-            <div>{post.image}</div>
-            <div>❤️ {post.likes}</div>
-            <div>💭 {post.comments.length}</div>
-            <p>-----------------------</p>
-          </div>
-        ))}
-      </main>
+      <Routes>
+        <Route index element={<Navigate to="/home" />} />
+        <Route path="/home" element={<Home />} />
+        <Route path="/posts/:id" element={<PostsDetails />} />
+      </Routes>
     </div>
   );
 }
