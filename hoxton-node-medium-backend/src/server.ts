@@ -11,14 +11,14 @@ const port = 5000
 // POSTS
 
 app.get('/posts' , async (req, res) => {
-    const posts = await prisma.posts.findMany({ include: { Comments: true } })
+    const posts = await prisma.posts.findMany({ include: { comments: true } })
     res.send(posts)
 })
 
 app.get('/posts/:id', async (req, res) => {
     const post = await prisma.posts.findUnique({ 
         where: { id: Number(req.params.id) }, 
-        include: { Comments: true }
+        include: { comments: true }
     })
     if (post){
         res.send(post)
@@ -29,7 +29,7 @@ app.get('/posts/:id', async (req, res) => {
 
 app.post('/posts', async(req, res) => {
     const post = await prisma.posts.create({ data: req.body,
-    include: { Comments: true }
+    include: { comments: true }
     })
     res.send(post)
 })

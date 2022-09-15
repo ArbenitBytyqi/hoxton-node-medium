@@ -16,7 +16,7 @@ model Posts {
   content  String
   image    String
   likes    Int
-  Comments Comments[]
+  comments Comments[]
 }
 
 model Comments {

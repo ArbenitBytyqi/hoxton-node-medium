@@ -12,9 +12,9 @@ function App() {
   }, []);
 
   useEffect(() => {
-    fetch("http://localhost:5000/posts")
+    fetch("http://localhost:5000/comments")
       .then((resp) => resp.json())
-      .then((usersFromServer) => setComments(usersFromServer));
+      .then((commentsFromServer) => setComments(commentsFromServer));
   }, []);
 
   return (
@@ -22,11 +22,12 @@ function App() {
       <main className="posts">
         {posts.map((post) => (
           <div>
-            <div>{post.id}</div>
             <div>{post.title}</div>
             <div>{post.content}</div>
             <div>{post.image}</div>
-            <div>{post.likes}</div>
+            <div>Likes:{post.likes}</div>
+            <div>Cooments: {post.comments.length}</div>
+            <p>-----------------------</p>
           </div>
         ))}
       </main>
